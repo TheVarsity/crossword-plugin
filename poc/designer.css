@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    position: relative;
+}
+
+.header {
+    padding: 2rem;
+    background-color: #0037ff;
+    color: white;
+}
+
+.settings {
+    padding: 2rem;
+    background-color: #287eff;
+    color: white;
+}
+
+.designer {
+    display: flex;
+    flex-direction: column;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.designer-label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.designer-input {
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+    padding: 0.4rem;
+    background-color: #4791ff;
+    color: white;
+}
+
+.designer-btn-success {
+    font-size: 1rem;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    padding: .6rem 1rem;
+    background-color: #002aff;
+    color: white;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+    margin-right: 5px; /* should not be here but meh */
+}
+
+.designer-btn-success:hover {
+    background-color: #0037ff;
+}
+
+.cell {
+    height: 2rem;
+    width: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+    overflow: hidden;
+
+    /* Force capital letters */
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.blocked {
+    background-color: #000 !important;
+}
+
+.crossword-grid {
+    display: table;
+    border-collapse: collapse;
+    border: 1px solid #000;
+}
+
+/* add a border to the left and bottom of each cell */
+.crossword-grid .cell {
+    /* force border to be within the element */
+    border-spacing: 0;
+    box-sizing: border-box;
+    border: 2px solid #000000;
+    position: relative;
+}
+
+.hint {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.dialog-container {
+    display: none;
+    flex-direction: column;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Center vertically & horizontally */
+    margin: auto;
+    transition: opacity 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+}
+
+.dialog {
+    width: 50rem;
+    min-height: 10%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dialog-header {
+    padding: 1rem 2rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.dialog-danger {
+    background-color: #ff2020;
+    color: white;
+}
+
+.dialog-warning {
+    background-color: #ffa526;
+    color: white;
+}
+
+.dialog-info {
+    background-color: #0037ff;
+    color: white;
+}
+
+.dialog-content {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+}
+
+.dialog-actions {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 1rem 1rem;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dialog-btn-success {
+    background-color: #1037ff;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    padding: .6rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .dialog {
+        width: 100%;
+    }
+}

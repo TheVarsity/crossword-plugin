@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Editor</title>
+    <script type="text/javascript" src="designer.js"></script>
+    <link rel="stylesheet" href="designer.css">
+</head>
+
+<body>
+    <div id="dialog-container" class="dialog-container">
+        <div class="dialog">
+            <div id="dialog-header" class="dialog-header dialog-info">
+            </div>
+            <div id="dialog-content" class="dialog-content">
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn-success" id="closeDialogBtn">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="header" id="header">
+        <h1>Crossword designer</h1>
+        <p>The below represents an early prototype of the crossword designer.</p>
+    </div>
+    <div class="settings" id="settings">
+        <label class="designer-label" for="gridSize">Grid square length</label>
+        <br /><br />
+        <input class="designer-input" type="number" min="1" id="gridSize" value="15" placeholder="15" />
+        <br />
+        <br />
+        <button class="designer-btn-success" id="updateGridBtn">Update grid</button>
+        <button class="designer-btn-success" id="exportGridBtn">Copy grid to clipboard</button>
+        <button class="designer-btn-success" id="helpBtn">Help</button>
+    </div>
+    <div class="designer" id="designer">
+        <div id="gridArea"></div>
+    </div>
+</body>
+
+</html>

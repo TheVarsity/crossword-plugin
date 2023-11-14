@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Player</title>
+    <script type="text/javascript" src="player.js"></script>
+    <link rel="stylesheet" href="player.css">
+</head>
+
+<body>
+    <div id="dialog-container" class="dialog-container">
+        <div class="dialog">
+            <div id="dialog-header" class="dialog-header dialog-info">
+            </div>
+            <div id="dialog-content" class="dialog-content">
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn-success" id="closeDialogBtn">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="header" id="header">
+        <h1>Crossword player</h1>
+        <p>The below represents an early prototype of the crossword player.</p>
+    </div>
+    <div class="settings" id="settings">
+        <label class="player-label" for="gridSize">Grid data</label>
+        <br /><br />
+        <input class="player-input" type="text" id="gridData" placeholder="" />
+        <br />
+        <br />
+        <button class="player-btn-success" id="updateGridBtn">Start game</button>
+        <button class="player-btn-success" id="helpBtn">Help</button>
+    </div>
+    <div class="player" id="player">
+        <div id="gridArea"></div>
+    </div>
+</body>
+
+</html>
