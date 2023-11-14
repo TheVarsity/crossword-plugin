@@ -283,5 +283,16 @@
         document.getElementById('helpBtn').addEventListener('click', () => {
             showMessage('<p>To play, just click on any cell and enter a letter -- use the hints to your advantage and solve the puzzle!</p>', 'Help', 'info');
         });
+
+        // Check if grid data is present in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlGridData = urlParams.get('gd');
+        if (urlGridData) {
+            document.getElementById('gridData').value = urlGridData;
+            // Lock grid data input
+            document.getElementById('gridData').disabled = true;
+            document.getElementById('updateGridBtn').disabled = true;
+            updateGridBtnClick();
+        }
     };
 })();

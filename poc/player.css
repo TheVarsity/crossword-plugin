@@ -55,6 +55,16 @@ body {
     margin-right: 5px; /* should not be here but meh */
 }
 
+.player-btn-success:disabled {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.player-btn-success:disabled:hover {
+    background-color: #e0e0e0;
+}
+
 .player-btn-success:hover {
     background-color: #0037ff;
 }
