@@ -53,6 +53,7 @@ body {
     transition: background-color 0.2s ease-in-out;
     cursor: pointer;
     margin-right: 5px; /* should not be here but meh */
+    border-radius: 5px;
 }
 
 .player-btn-success:disabled {
