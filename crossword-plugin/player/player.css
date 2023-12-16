@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    position: relative;
+    min-height: 100vh;
+}
+
+.player {
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.cell {
+    font-size: 1.5rem;
+    text-align: center;
+    overflow: hidden;
+
+    /* Force capital letters */
+    text-transform: uppercase;
+    cursor: text;
+}
+
+.blocked {
+    background-color: #000 !important;
+}
+
+.crossword-grid {
+    display: table;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    height: 100vh;
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+.uneditable {
+    background-color: #e0e0e0;
+}
+
+/* add a border to the left and bottom of each cell */
+.crossword-grid .cell {
+    /* force border to be within the element */
+    border-spacing: 0;
+    box-sizing: border-box;
+    border: 2px solid #000000;
+    position: relative;
+}
+
+.cell-input {
+    height: 100%;
+    width: 100%;
+    /* make the input font size fit the cell */
+    font-size: inherit;
+    text-align: center;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    text-transform: uppercase;
+    cursor: text;
+}
+
+.hint {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.status-container {
+    display: none;
+    flex-direction: column;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    /* Center vertically & horizontally */
+    margin: auto;
+    transition: opacity 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.status-icon {
+    height: auto;
+    width: 50vh;
+}
+
+.status-icon-success {
+    fill: #5fc15f;
+    filter: invert(80%) sepia(20%) saturate(1239%) hue-rotate(66deg) brightness(83%) contrast(84%);
+}
+
+.status-icon-failure {
+    fill: #e44848;
+    filter: invert(53%) sepia(89%) saturate(3464%) hue-rotate(332deg) brightness(92%) contrast(93%);
+}
