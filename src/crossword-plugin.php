@@ -3,7 +3,7 @@
 Plugin Name: Crossword Plugin
 Plugin URI: https://github.com/TheVarsity/crossword-plugin
 Description: A plugin to create and display crosswords on a WordPress website.
-Version: 1.0.0
+Version: 1.0.1
 Author: Andrew Hong
 Author URI: https://ahong.ca
 License: GNU GPLv3
@@ -14,30 +14,33 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Include plugin config file.
+require_once(plugin_dir_path(__FILE__) . 'crossword-plugin-config.php');
+
 /**
  * Registers the crossword post type.
  */
 function crossword_post_type()
 {
     $labels = array(
-        'name' => 'Crosswords',
-        'singular_name' => 'Crossword',
-        'add_new' => 'Add New',
-        'add_new_item' => 'Add New Crossword',
-        'edit_item' => 'Edit Crossword',
-        'new_item' => 'New Crossword',
-        'view_item' => 'View Crossword',
-        'search_items' => 'Search Crosswords',
-        'not_found' => 'No crosswords found',
-        'not_found_in_trash' => 'No crosswords found in Trash',
-        'parent_item_colon' => 'Parent Crossword:',
-        'menu_name' => 'Crosswords',
+        'name' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_NAME'],
+        'singular_name' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_SINGULAR_NAME'],
+        'add_new' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_ADD_NEW'],
+        'add_new_item' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_ADD_NEW_ITEM'],
+        'edit_item' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_EDIT_ITEM'],
+        'new_item' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_NEW_ITEM'],
+        'view_item' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_VIEW_ITEM'],
+        'search_items' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_SEARCH_ITEMS'],
+        'not_found' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_NOT_FOUND'],
+        'not_found_in_trash' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_NOT_FOUND_IN_TRASH'],
+        'parent_item_colon' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_PARENT_ITEM_COLON'],
+        'menu_name' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_MENU_NAME'],
     );
 
     $args = array(
         'labels' => $labels,
         'hierarchical' => false,
-        'description' => 'Crosswords',
+        'description' => CROSSWORD_PLUGIN_STRINGS['POST_TYPE_DESCRIPTION'],
         'supports' => array('title', 'author'),
         'public' => true,
         'exclude_from_search' => true,
@@ -62,8 +65,8 @@ function crossword_shortcode($atts)
 {
     $atts = shortcode_atts(array(
         'id' => null,
-        'size' => '600px',
-        'gridSize' => '9',
+        'size' => CROSSWORD_PLUGIN_DEFAULT_WIDTH_HEIGHT,
+        'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
     ), $atts);
 
     $crossword = get_post($atts['id']);
@@ -83,8 +86,7 @@ function crossword_shortcode($atts)
     // - data: The crossword data (i.e., the Base64-encoded JSON string)
     
     // Obtain URL to plugin_dir/player/player.html
-    $plugin_dir = plugin_dir_url(__FILE__);
-    $player_url = $plugin_dir . 'player/player.html';
+    $player_url = CROSSWORD_PLUGIN_URL . 'player/player.html';
 
     // Set up iframe with GET parameter gd=data
     $iframe = '<iframe src="' . $player_url . '?gd=' . $crossword_meta['data'] . '" width="' . $atts['size'] . '" height="' . $atts['size'] . '" frameborder="0" scrolling="yes"></iframe>';
@@ -108,13 +110,12 @@ function crossword_meta_box_callback($post)
         $crossword_meta = array(
             'id' => $post->ID,
             'data' => '',
-            'gridSize' => '9',
+            'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
         );
     }
     
     // Generate link to crossword editor
-    $plugin_dir = plugin_dir_url(__FILE__);
-    $editor_url = $plugin_dir . 'designer/designer.html';
+    $editor_url = CROSSWORD_PLUGIN_URL . 'designer/designer.html';
     $url_parameters = '?gd=' . $crossword_meta['data'] . '&size=' . $crossword_meta['gridSize'];
     $editor_url .= $url_parameters;
 
@@ -122,7 +123,7 @@ function crossword_meta_box_callback($post)
     echo '<input type="hidden" name="crossword_meta_box_data" id="crossword_meta_box_data" value="' . $crossword_meta['data'] . '">';
     
     // Enqueue script at resources/crossword-plugin.js
-    wp_enqueue_script('crossword-plugin', $plugin_dir . 'resources/crossword-plugin.js');
+    wp_enqueue_script('crossword-plugin', CROSSWORD_PLUGIN_URL . 'resources/crossword-plugin.js');
 
     // Return iframe
     echo '<div style="overflow-x: scroll; max-width: 100%;">';
@@ -130,7 +131,7 @@ function crossword_meta_box_callback($post)
     echo '</div>';
 
     // Return help text
-    echo '<p>Left-click on a cell to edit it, and right-click to block it (and again to unblock it). Shift-left-click to add a clue.</p>';
+    echo CROSSWORD_PLUGIN_EDITOR_HELP_STRING;
 }
 
 /**
@@ -140,7 +141,7 @@ function crossword_meta_box()
 {
     add_meta_box(
         'crossword_meta_box',
-        'Crossword editor',
+        CROSSWORD_PLUGIN_EDITOR_STRING,
         'crossword_meta_box_callback',
         'crossword',
         'normal',
@@ -249,7 +250,7 @@ function crossword_meta_box_reset_save($post_id)
     $crossword_meta = array(
         'id' => $post_id,
         'data' => '',
-        'gridSize' => '9',
+        'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
     );
 
     // log to error_log
@@ -288,14 +289,14 @@ function crossword_meta_box_size_callback($post)
         $crossword_meta = array(
             'id' => $post->ID,
             'data' => '',
-            'gridSize' => '9',
+            'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
         );
     }
 
     echo '<p>Enter the size of the crossword grid below. Please note that this will reset the crossword puzzle.</p>';
 
     echo '<label for="crossword_meta_box_size">Size:&nbsp;&nbsp;</label>';
-    echo '<input type="number" name="crossword_meta_box_size" id="crossword_meta_box_size" value="' . $crossword_meta['gridSize'] . '" min="3" max="15">';
+    echo '<input type="number" name="crossword_meta_box_size" id="crossword_meta_box_size" value="' . $crossword_meta['gridSize'] . '" min="3" max="20">';
 }
 
 /**
@@ -342,6 +343,46 @@ function crossword_meta_box_size_save($post_id)
 }
 
 /**
+ * Function to define the meta box for the shortcode assistant.
+ */
+function crossword_meta_box_shortcode_assistant()
+{
+    add_meta_box(
+        'crossword_meta_box_shortcode_assistant',
+        'Crossword shortcode assistant',
+        'crossword_meta_box_shortcode_assistant_callback',
+        'crossword',
+        'normal',
+        'core'
+    );
+}
+
+/**
+ * Displays fields for the shortcode assistant.
+ *
+ * @param WP_Post $post The post object.
+ */
+function crossword_meta_box_shortcode_assistant_callback($post)
+{
+    wp_nonce_field('crossword_meta_box', 'crossword_meta_box_nonce');
+
+    $crossword_meta = get_post_meta($post->ID, 'crossword_meta', true);
+
+    if (!$crossword_meta) {
+        $crossword_meta = array(
+            'id' => $post->ID,
+            'data' => '',
+            'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
+        );
+    }
+
+    echo CROSSWORD_PLUGIN_EDITOR_SHORTCODE_STRING;
+
+    $shortcode = sprintf(CROSSWORD_PLUGIN_EDITOR_SHORTCODE_FORMAT, $crossword_meta['id'], CROSSWORD_PLUGIN_DEFAULT_WIDTH_HEIGHT);
+    echo '<input type="text" value="' . htmlspecialchars($shortcode) . '" readonly="readonly" style="width: 100%;">';
+}
+
+/**
  * Initializes the crossword plugin.
  */
 function crossword_plugin_init()
@@ -359,6 +400,9 @@ function crossword_plugin_init()
     // Add size update code.
     add_action('add_meta_boxes', 'crossword_meta_box_size');
     add_action('save_post', 'crossword_meta_box_size_save');
+
+    // Add shortcode assistant code.
+    add_action('add_meta_boxes', 'crossword_meta_box_shortcode_assistant');
 
     // Add the shortcode.
     add_shortcode('crossword', 'crossword_shortcode');
