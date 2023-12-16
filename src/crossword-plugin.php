@@ -90,7 +90,7 @@ function crossword_shortcode($atts)
 
     // Set up iframe with GET parameter gd=data
     $iframe = '<iframe src="' . $player_url . '?gd=' . $crossword_meta['data'] . '" width="' . $atts['size'] . '" height="' . $atts['size'] . '" frameborder="0" scrolling="yes"></iframe>';
-    $full_html = '<div style="overflow-x: scroll; max-width: 100%;">' . $iframe . '</div>';
+    $full_html = '<div style="overflow-x: auto; max-width: 100%;">' . $iframe . '</div>';
 
     return $full_html;
 }
@@ -126,7 +126,7 @@ function crossword_meta_box_callback($post)
     wp_enqueue_script('crossword-plugin', CROSSWORD_PLUGIN_URL . 'resources/crossword-plugin.js');
 
     // Return iframe
-    echo '<div style="overflow-x: scroll; max-width: 100%;">';
+    echo '<div style="overflow-x: auto; max-width: 100%;">';
     echo '<iframe id="crosswordEditorFrame" src="' . $editor_url . '" width="700px" height="700px" frameborder="0" scrolling="yes"></iframe>';
     echo '</div>';
 
