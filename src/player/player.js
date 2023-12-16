@@ -20,9 +20,9 @@
             // Icon source
             const iconElement = document.getElementById('status-icon');
             if (type === 'success') {
-                iconElement.src = 'checkmark.svg';
+                iconElement.src = '../resources/checkmark.svg';
             } else {
-                iconElement.src = 'errormark.svg';
+                iconElement.src = '../resources/errormark.svg';
             }
 
             // Fade in dialog
