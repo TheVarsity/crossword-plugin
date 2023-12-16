@@ -178,6 +178,14 @@ function crossword_meta_box_save($post_id)
     }
 
     $crossword_meta = get_post_meta($post_id, 'crossword_meta', true);
+    if (!$crossword_meta) {
+        $crossword_meta = array(
+            'id' => $post_id,
+            'data' => '',
+            'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
+        );
+    }
+
     $crossword_meta['data'] = $_POST['crossword_meta_box_data'];
 
     // log to debug_log
