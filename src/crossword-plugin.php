@@ -1,13 +1,13 @@
 <?php
-/*
-Plugin Name: Crossword Plugin
-Plugin URI: https://github.com/TheVarsity/crossword-plugin
-Description: A plugin to create and display crosswords on a WordPress website.
-Version: 1.0.1
-Author: Andrew Hong
-Author URI: https://ahong.ca
-License: GNU GPLv3
-*/
+/**
+ * Plugin Name: Crossword Plugin
+ * Plugin URI: https://github.com/TheVarsity/crossword-plugin
+ * Description: A plugin to create and display crosswords on a WordPress website.
+ * Version: 1.0.1
+ * Author: Andrew Hong
+ * Author URI: https://ahong.ca
+ * License: GNU GPLv3
+ */
 
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
@@ -63,11 +63,12 @@ function crossword_post_type()
  */
 function crossword_shortcode($atts)
 {
-    $atts = shortcode_atts(array(
-        'id' => null,
-        'size' => CROSSWORD_PLUGIN_DEFAULT_WIDTH_HEIGHT,
-        'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
-    ), $atts);
+    $atts = shortcode_atts(
+        array(
+            'id' => null,
+            'size' => CROSSWORD_PLUGIN_DEFAULT_WIDTH_HEIGHT,
+            'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
+        ), $atts);
 
     $crossword = get_post($atts['id']);
 
@@ -84,12 +85,12 @@ function crossword_shortcode($atts)
     // The crossword meta should contain the following keys:
     // - id: The ID of the crossword (i.e., post ID)
     // - data: The crossword data (i.e., the Base64-encoded JSON string)
-    
-    // Obtain URL to plugin_dir/player/player.html
-    $player_url = CROSSWORD_PLUGIN_URL . 'player/player.html';
+
+    // Obtain URL to plugin_dir/player/player.php
+    $player_url = CROSSWORD_PLUGIN_URL . 'player/player.php';
 
     // Set up iframe with GET parameter gd=data
-    $iframe = '<iframe src="' . $player_url . '?gd=' . $crossword_meta['data'] . '" width="' . $atts['size'] . '" height="' . $atts['size'] . '" frameborder="0" scrolling="yes"></iframe>';
+    $iframe = '<iframe src="' . $player_url . '?id=' . $atts['id'] . '" width="' . $atts['size'] . '" height="' . $atts['size'] . '" frameborder="0" scrolling="yes"></iframe>';
     $full_html = '<div style="overflow-x: auto; max-width: 100%;">' . $iframe . '</div>';
 
     return $full_html;
@@ -113,15 +114,15 @@ function crossword_meta_box_callback($post)
             'gridSize' => CROSSWORD_PLUGIN_DEFAULT_SIZE,
         );
     }
-    
+
     // Generate link to crossword editor
-    $editor_url = CROSSWORD_PLUGIN_URL . 'designer/designer.html';
-    $url_parameters = '?gd=' . $crossword_meta['data'] . '&size=' . $crossword_meta['gridSize'];
+    $editor_url = CROSSWORD_PLUGIN_URL . 'designer/designer.php';
+    $url_parameters = '?id=' . $post->ID . '&size=' . $crossword_meta['gridSize'];
     $editor_url .= $url_parameters;
 
     // Add hidden input field for crossword data
     echo '<input type="hidden" name="crossword_meta_box_data" id="crossword_meta_box_data" value="' . $crossword_meta['data'] . '">';
-    
+
     // Enqueue script at resources/crossword-plugin.js
     wp_enqueue_script('crossword-plugin', CROSSWORD_PLUGIN_URL . 'resources/crossword-plugin.js');
 
@@ -194,11 +195,36 @@ function crossword_meta_box_save($post_id)
     update_post_meta($post_id, 'crossword_meta', $crossword_meta);
 }
 
+
+/**
+ * Function to define the meta box for showing the synchronization status between the designer and the post editor.
+ */
+function crossword_meta_box_sync_status()
+{
+    add_meta_box(
+        'crossword_meta_box_sync_status',
+        'Editor synchronization status',
+        'crossword_meta_box_sync_status_callback',
+        'crossword',
+        'side',
+        'high'
+    );
+}
+
+/**
+ * Displays the synchronization status between the designer and the post editor.
+ */
+function crossword_meta_box_sync_status_callback($post) {
+    echo '<p><strong>Last synchronization:</strong> <span id="crossword_meta_box_sync_status_last_sync">Never</span></p>';
+    echo '<p>Do not save the post until the synchronization status is sufficiently recent, or data loss may occur.</p>';
+}
+
 /**
  * Function to define the meta box for resetting the crossword puzzle.
  */
 function crossword_meta_box_reset()
 {
+    wp_nonce_field('crossword_meta_box', 'crossword_meta_box_nonce');
     add_meta_box(
         'crossword_meta_box_reset',
         'Reset crossword',
@@ -404,6 +430,9 @@ function crossword_plugin_init()
     // Add reset code.
     add_action('add_meta_boxes', 'crossword_meta_box_reset');
     add_action('save_post', 'crossword_meta_box_reset_save');
+
+    // Add sync box.
+    add_action('add_meta_boxes', 'crossword_meta_box_sync_status');
 
     // Add size update code.
     add_action('add_meta_boxes', 'crossword_meta_box_size');
