@@ -3,7 +3,7 @@
  * Plugin Name: Crossword Plugin
  * Plugin URI: https://github.com/TheVarsity/crossword-plugin
  * Description: A plugin to create and display crosswords on a WordPress website.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Andrew Hong
  * Author URI: https://ahong.ca
  * License: GNU GPLv3
