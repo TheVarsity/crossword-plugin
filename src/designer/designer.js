@@ -187,8 +187,8 @@
                             }
                         }
 
-                        // Ctrl click
-                        if (e.ctrlKey) {
+                        // Ctrl click (add command for Mac)
+                        if (e.ctrlKey || e.metaKey) {
                             e.preventDefault();
                             e.stopPropagation();
 
