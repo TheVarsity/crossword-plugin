@@ -4,7 +4,7 @@
  * and designer. 
  */
 
-function get_crossword($post_id)
+function get_crossword($post_id, $ignore_post_status=false)
 {
     /* Fetch post data */
     $post_id = $_GET['id'];
@@ -16,7 +16,7 @@ function get_crossword($post_id)
     $post = get_post($post_id);
 
     /* Check if the post is published */
-    if ($post->post_status != 'publish') {
+    if ($post->post_status != 'publish' && !$ignore_post_status) {
         return "";
     }
 

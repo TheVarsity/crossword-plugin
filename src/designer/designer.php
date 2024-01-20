@@ -1,6 +1,6 @@
 <?php
 require_once (dirname(__FILE__) . '/../crossword-helpers.php');
-$crossword_data = get_crossword($_GET['id']);
+$crossword_data = get_crossword($_GET['id'], true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

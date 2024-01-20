@@ -224,7 +224,6 @@
         // but also the size parameter for a new puzzle in the URL parameters.
         const urlParams = new URLSearchParams(window.location.search);
         const puzzleData = document.getElementById('gridData').value;
-
         // If we have puzzle data, try to load it
         if (puzzleData) {
             try {

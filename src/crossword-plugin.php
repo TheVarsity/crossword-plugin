@@ -174,7 +174,7 @@ function crossword_meta_box_save($post_id)
         return;
     }
 
-    if (!isset($_POST['crossword_meta_box_data'])) {
+    if (!isset($_POST['crossword_meta_box_data']) || empty($_POST['crossword_meta_box_data'])) {
         return;
     }
 
