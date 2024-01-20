@@ -2,7 +2,7 @@
 (function () {
     const defaultGridData = {
         size: 0,
-        cells: [], // Each element is an array of cells of the form { "letter": "", "blocked": false, "hintNumber": ""}
+        cells: [], // Each element is an array of cells of the form { "letter": "", "blocked": false, "hintNumber": "", "specialFlags": []}
         checksum: 0,
         formatVersion: 1,
         minSquareSize: 20,
@@ -98,6 +98,14 @@
                         cell.appendChild(hintNumber);
                     }
 
+                    // Check if the cell has a special flag
+                    if (gridData.cells[i][j].specialFlags) {
+                        // Check if the cell has a cell-circled flag
+                        if (gridData.cells[i][j].specialFlags.indexOf('cell-circled') !== -1) {
+                            cell.classList.add('cell-circled');
+                        }
+                    }
+
                     // Add input element if required
                     const input = document.createElement('input');
                     input.type = 'text';
@@ -153,6 +161,7 @@
 
                     // Add listener to detect shift+click
                     input.addEventListener('mousedown', (e) => {
+                        // Shift click
                         if (e.shiftKey) {
                             e.preventDefault();
                             e.stopPropagation();
@@ -174,6 +183,32 @@
 
                                 onDataChanged();
                             }
+                        }
+
+                        // Ctrl click
+                        if (e.ctrlKey) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            // Add circle special flag if it doesn't exist, otherwise remove it
+                            let specialFlags = solutionData.cells[i][j].specialFlags;
+
+                            // If the cell doesn't have any special flags, create the array
+                            if (!specialFlags) {
+                                solutionData.cells[i][j].specialFlags = [];
+                                specialFlags = [];
+                            }
+
+                            const circleIndex = specialFlags.indexOf('cell-circled');
+                            if (circleIndex === -1) {
+                                specialFlags.push('cell-circled');
+                                cell.classList.add('cell-circled');
+                            } else {
+                                specialFlags.splice(circleIndex, 1);
+                                cell.classList.remove('cell-circled');
+                            }
+
+                            onDataChanged();
                         }
                     });
                 }
@@ -211,6 +246,7 @@
                         letter: '',
                         blocked: false,
                         hintNumber: '',
+                        specialFlags: [],
                     };
                 }
             }

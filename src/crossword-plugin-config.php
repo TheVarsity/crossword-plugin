@@ -27,7 +27,7 @@ define('CROSSWORD_PLUGIN_STRINGS', array(
 
 define('CROSSWORD_PLUGIN_DEFAULT_SIZE', '9');
 define('CROSSWORD_PLUGIN_EDITOR_STRING', 'Crossword editor');
-define('CROSSWORD_PLUGIN_EDITOR_HELP_STRING', '<p><strong>Left-click on a cell to edit it, and right-click to block it (and again to unblock it). Shift-left-click to add a clue.</strong></p>');
+define('CROSSWORD_PLUGIN_EDITOR_HELP_STRING', '<p><strong>Left-click on a cell to edit it, and right-click to block it (and again to unblock it). Shift-left-click to add a clue, and use CTRL-left-click to circle a cell (and again to remove the circle).</strong></p>');
 define('CROSSWORD_PLUGIN_EDITOR_SHORTCODE_FORMAT', '[crossword id="%d" size="%s"]');
 define('CROSSWORD_PLUGIN_EDITOR_SHORTCODE_STRING', 'Copy and paste the following shortcode into your post to display the crossword player:');
 define('CROSSWORD_PLUGIN_DEFAULT_WIDTH_HEIGHT', '600px');

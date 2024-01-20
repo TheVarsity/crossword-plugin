@@ -22,6 +22,12 @@ body {
     cursor: text;
 }
 
+.cell-circled {
+    /* Add background image from ../resources/circle-outline.svg, and expand it to cover the cell */
+    background: url('../resources/circle-outline.svg') no-repeat center center;
+    background-size: 100% 100%;
+}
+
 .blocked {
     background-color: #000 !important;
 }
@@ -60,6 +66,7 @@ body {
     color: #000;
     text-transform: uppercase;
     cursor: text;
+    padding: 0;
 }
 
 .hint {

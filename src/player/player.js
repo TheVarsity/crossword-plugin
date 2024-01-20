@@ -2,7 +2,7 @@
 (function () {
     const defaultGridData = {
         size: 0,
-        cells: [], // Each element is an array of cells of the form { "letter": "", "blocked": false, "hintNumber": ""}
+        cells: [], // Each element is an array of cells of the form { "letter": "", "blocked": false, "hintNumber": "", "specialFlags": [] }
         checksum: 0,
         formatVersion: 1,
         minSquareSize: 20,
@@ -108,6 +108,13 @@
                         hintNumber.classList.add('hint');
                         hintNumber.innerHTML = gridData.cells[i][j].hintNumber;
                         cell.appendChild(hintNumber);
+                    }
+
+                    // Check if cell has special flags
+                    if (gridData.cells[i][j].specialFlags) {
+                        if (gridData.cells[i][j].specialFlags.includes('cell-circled')) {
+                            cell.classList.add('cell-circled');
+                        }
                     }
 
                     // Add input element if required
