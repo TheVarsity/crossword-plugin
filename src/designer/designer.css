@@ -75,6 +75,10 @@ body {
     left: 5%;
     font-size: 1rem;
     font-weight: bold;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0 0.2rem;
+    border-radius: 0.5rem;
 }
 
 .status-container {
