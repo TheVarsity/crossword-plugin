@@ -28,6 +28,7 @@ The editor page appears as follows:
 Notice several elements:
 - Title: The title of your puzzle
 - Reset crossword puzzle: Clears your crossword puzzle
+- Crossword synchronization status: To avoid potential JS conflicts, the actual crossword designer is shown through an iframe. Because of that, the main post editor needs to synchronize the data from the iframe, hence the last time a successful sync has occurred is shown. If this says "Never", do not save the post.
 - Crossword size: Change the number of squares on both axes of the grid
 - Crossword shortcode assistant: Copy this shortcode to display the puzzle on a post.
 

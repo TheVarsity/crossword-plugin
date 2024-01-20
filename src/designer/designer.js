@@ -38,8 +38,10 @@
             const iconElement = document.getElementById('status-icon');
             if (type === 'success') {
                 iconElement.src = '../resources/checkmark.svg';
+                iconElement.classList.value = 'status-icon status-icon-success';
             } else {
                 iconElement.src = '../resources/errormark.svg';
+                iconElement.classList.value = 'status-icon status-icon-failure';
             }
 
             // Fade in dialog
@@ -218,10 +220,10 @@
             resizeListener();
         };
 
-        // Check for URL data. We look for the gd parameter for existing puzzle data,
-        // but also the size parameter for a new puzzle.
+        // Check for URL data. We look for exiting data in the gridData input field,
+        // but also the size parameter for a new puzzle in the URL parameters.
         const urlParams = new URLSearchParams(window.location.search);
-        const puzzleData = urlParams.get('gd');
+        const puzzleData = document.getElementById('gridData').value;
 
         // If we have puzzle data, try to load it
         if (puzzleData) {
@@ -279,5 +281,13 @@
 
         // Add resize listener
         window.addEventListener('resize', resizeListener);
+
+        // Append hidden input to body indicating load completion
+        const loadedInput = document.createElement('input');
+        loadedInput.type = 'hidden';
+        loadedInput.value = 'true';
+        loadedInput.name = 'loaded';
+        loadedInput.id = 'loaded';
+        document.body.appendChild(loadedInput);
     };
 })();

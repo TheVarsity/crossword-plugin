@@ -21,8 +21,10 @@
             const iconElement = document.getElementById('status-icon');
             if (type === 'success') {
                 iconElement.src = '../resources/checkmark.svg';
+                iconElement.classList.value = 'status-icon status-icon-success';
             } else {
                 iconElement.src = '../resources/errormark.svg';
+                iconElement.classList.value = 'status-icon status-icon-failure';
             }
 
             // Fade in dialog
@@ -147,9 +149,8 @@
             resizeListener();
         };
 
-        // Check for URL data
-        const urlParams = new URLSearchParams(window.location.search);
-        const puzzleData = urlParams.get('gd');
+        // Check for data in the input field gridData
+        const puzzleData = document.getElementById('gridData').value;
 
         // If we have puzzle data, try to load it
         if (puzzleData) {
