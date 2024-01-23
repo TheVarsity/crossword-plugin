@@ -37,23 +37,24 @@
          * Listener for window resize event
          */
         const resizeListener = function () {
-            // Force #player to take up all remaining space
-            const player = document.getElementById('player');
             const playerHeight = window.innerHeight;
-            player.style.height = playerHeight + 'px';
 
             // Update cell height so that the grid of size n fits in the player
             const gridSize = solutionData.size;
             const cellHeight = (playerHeight - window.innerHeight * 0.1) / gridSize;
             const gridCells = document.querySelectorAll('#grid td');
             gridCells.forEach((cell) => {
-                cell.style.fontSize = cellHeight * 0.7 + 'px';
+                cell.style.fontSize = cellHeight * 0.65 + 'px';
             });
         };
 
         const checkWin = function () {
             // Go through each input of the grid data
             let successful = true;
+            let numberOfIncorrectCells = 0;
+            let totalNumberOfCellsFilled = 0;
+            let totalNumberOfCells = 0;
+
             solutionData.cells.forEach((row, i) => {
                 row.forEach((cell, j) => {
                     // Check if the cell has a letter
@@ -61,19 +62,37 @@
                         return;
                     }
 
+                    totalNumberOfCells++;
+
                     const input = document.getElementById('cell-' + i + '-' + j).querySelector('input');
                     if (!input) {
                         return;
                     }
 
+                    if (input.value) {
+                        totalNumberOfCellsFilled++;
+                    }
+
                     if (input.value.toLowerCase() !== cell.letter.toLowerCase()) {
+                        numberOfIncorrectCells++;
                         successful = false;
                     }
                 });
             });
+            
+            const statusText = document.getElementById('status-text');
+            if (totalNumberOfCellsFilled === totalNumberOfCells) {
+                statusText.innerHTML = '<strong>Hint:</strong> ' + numberOfIncorrectCells + ' of your cells are incorrect.';
+            }
 
             if (successful) {
+                /* Unfocus all inputs */
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach((input) => {
+                    input.blur();
+                });
                 showStatus('success');
+                statusText.innerHTML = '';
             }
         }
 

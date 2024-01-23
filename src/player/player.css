@@ -5,11 +5,18 @@ body {
     margin: 0;
     position: relative;
     min-height: 100vh;
+    width: 95vh;
 }
 
 .player {
     height: 100%;
     aspect-ratio: 1/1;
+}
+
+.status-text {
+    width: auto;
+    padding-top: 10px;
+    font-size: 1rem;
 }
 
 .cell {
@@ -37,8 +44,8 @@ body {
     display: table;
     border-collapse: collapse;
     border: 1px solid #000;
-    height: 100vh;
-    width: 100%;
+    height: 95vh;
+    width: auto;
     aspect-ratio: 1/1;
 }
 
@@ -93,9 +100,9 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 5vh;
     width: 100%;
-    height: 100%;
+    height: 95vh;
     /* Center vertically & horizontally */
     margin: auto;
     transition: opacity 0.2s ease-in-out;

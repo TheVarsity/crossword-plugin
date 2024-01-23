@@ -21,6 +21,7 @@ $crossword_data = get_crossword($_GET['id']);
     </div>
     <div class="player" id="player">
         <div id="gridArea"></div>
+        <div id="status-text" class="status-text"></div>
     </div>
 </body>
 
