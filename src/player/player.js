@@ -160,6 +160,40 @@
                             // Run win check
                             checkWin();
                         });
+
+                        input.addEventListener('keydown', (e) => {
+                            // Check if keypress was an arrow key
+                            if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                                // Get cell coordinates
+                                const cellCoordinates = cell.id.split('-');
+                                const row = parseInt(cellCoordinates[1]);
+                                const column = parseInt(cellCoordinates[2]);
+
+                                // Get next cell
+                                let nextCell;
+                                switch (e.key) {
+                                    case 'ArrowUp':
+                                        nextCell = document.getElementById('cell-' + (row - 1) + '-' + column);
+                                        break;
+                                    case 'ArrowDown':
+                                        nextCell = document.getElementById('cell-' + (row + 1) + '-' + column);
+                                        break;
+                                    case 'ArrowLeft':
+                                        nextCell = document.getElementById('cell-' + row + '-' + (column - 1));
+                                        break;
+                                    case 'ArrowRight':
+                                        nextCell = document.getElementById('cell-' + row + '-' + (column + 1));
+                                        break;
+                                }
+
+                                // Focus next cell
+                                if (nextCell) {
+                                    nextCell.querySelector('input').focus();
+                                }
+
+                                return;
+                            }
+                        });
                     }
                 }
             }
